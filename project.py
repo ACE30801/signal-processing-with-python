@@ -3,8 +3,9 @@ import math
 from operator import concat
 from matplotlib import scale, style
 import matplotlib.pyplot as plot
-from numpy import block, real, sort
+from numpy import block, real, sort, array, arange
 from prettytable import PrettyTable
+from scipy import interpolate as intp
 
 def sort_dict(d):
     d = dict(sorted(d.items()))
@@ -97,7 +98,14 @@ def draw_graph(angles):
         plot.scatter(point, value)
         plot.ion()
         plot.show()
-    plot.plot(points, values)
+    d = array((points, values))
+    fill_points, p = intp.splprep(d, s=0)
+    newp = arange(0, 1, 0.005)
+    curve = intp.splev(newp, fill_points)
+    plot.plot(curve[0], curve[1], color='blue')
+    plot.plot(d[0,:],d[1,:],'ob')
+    """plot.plot(points, values)
+    """
     plot.plot([0, 400], [0, 0], color = 'black')
     for n in points:
         plot.plot([n,n], [1.1*min(values), angles[n]], linestyle = 'dashed')
@@ -107,7 +115,7 @@ def draw_graph(angles):
     plot.ylabel('value')
     plot.xticks(points)
     F_eq(points, values)
-    
+
 
 
 def F_eq(angles, volts):
