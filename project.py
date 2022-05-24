@@ -20,7 +20,7 @@ def edit_data(table, angles):
             #remove a point
             while conRem != '0':
                 print(table)
-                points = list(map(int, input('\nenter the angles you want to remove: ').split()))
+                points = list(map(float, input('\nenter the angles you want to remove: ').split()))
                 for point in points:
                     itr = 0
                     if point in angles:
@@ -31,9 +31,9 @@ def edit_data(table, angles):
                                 break
                         angles.pop(point)
                         table.del_row(itr)
-                        print('\nangle %d has been removed succesfully'%(point))
+                        print('\nangle %f has been removed succesfully'%(point))
                     else:
-                        print('\nangle %d does not exist\nchoose an existing angle from the table '%(point))
+                        print('\nangle %f does not exist\nchoose an existing angle from the table '%(point))
                 print("")
                 print(table)
                 conRem = input('\ndo you wish to remove any other point?\n0 to exit edit\nanything else to continue\nyour choice: ') 
@@ -44,14 +44,14 @@ def edit_data(table, angles):
             #add angle
             while conAdd != '0':
                 points = list()
-                points = concat(points, (list(map(int, input('\nenter the angles you want to add: ').split()))))
+                points = concat(points, (list(map(float, input('\nenter the angles you want to add: ').split()))))
                 print("")
                 for i in points:
                     if i not in angles:
-                        v = int(input('enter the value of angle %d: '%(i)))
+                        v = int(input('enter the value of angle %f: '%(i)))
                         angles[i] = v
                     else:
-                        print("the angle %d already exists"%(i))
+                        print("the angle %f already exists"%(i))
                 angles = sort_dict(angles)
                 table.clear_rows()
                 table.add_rows(angles.items())
@@ -62,10 +62,10 @@ def edit_data(table, angles):
             #edit angle
             conEdit = '1'
             while conEdit != '0':    
-                points = list(map(int, input('\nenter the  angles you want to edit: ').split()))
+                points = list(map(float, input('\nenter the  angles you want to edit: ').split()))
                 for point in points:
                     if point in angles:
-                        v = int(input("\nold value of angle %d = %d\nenter the new value of angle %d: "%(point, angles[point], point)))
+                        v = float(input("\nold value of angle %f = %f\nenter the new value of angle %f: "%(point, angles[point], point)))
                         angles[point] = v
                         cnt = 0
                         for i in angles:
@@ -75,9 +75,9 @@ def edit_data(table, angles):
                                 break
                         table.clear_rows()
                         table.add_rows(angles.items())
-                        print('point %d have been edited succesfully\n'%(point))
+                        print('point %f have been edited succesfully\n'%(point))
                     else:
-                        print('angle %d not found\n'%(point))
+                        print('angle %f not found\n'%(point))
                 print(table)
                 conEdit = input('\ndo you wish to edit any other point?\n0 to exit edit\nanything else to continue\nyour choice: ')
         elif choice == '0':
@@ -141,20 +141,20 @@ def F_eq(angles, volts):
 def get_input():
     print("please, enter space seperated angles")
     angles = dict()
-    keys = list(map(int, input().split()))
+    keys = list(map(float, input().split()))
     
     inChoice = input('\n*enter 1 to enter values separately.\n*enter any other number to enter values in one line\nyour choice: ')
     if inChoice == '1':
         print("")
         for x in keys:
-            angles[x] = int(input('enter the value of the %d degrees angle: '%(x)))
+            angles[x] = float(input('enter the value of the %d degrees angle: '%(x)))
     else:
         print('\nenter space separated %d values in order'%(len(keys)))
-        values = list(map(int, input().split()))
+        values = list(map(float, input().split()))
         if len(values) < len(keys):
             print("\nmore values are required\n")
             for n in range(len(values),len(keys)):
-                 values.append(int(input('enter the value of the %d degrees angle: '%(keys[n]))))
+                 values.append(float(input('enter the value of the %d degrees angle: '%(keys[n]))))
         for k,v in zip(keys, values):
                 angles[k] = v
     angles = sort_dict(angles)
